@@ -8,6 +8,7 @@
     "test": "node --test lib/game-state.test.js lib/game-state-monitor.test.js"
   },
   "dependencies": {
+    "localtunnel": "^2.0.2",
     "qrcode": "^1.5.4"
   }
 }
