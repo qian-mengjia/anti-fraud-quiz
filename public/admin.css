@@ -56,6 +56,33 @@
   gap: 12px;
 }
 
+.modeSwitch {
+  display: inline-flex;
+  gap: 6px;
+  padding: 4px;
+  border-radius: 999px;
+  background: rgba(23, 50, 77, 0.06);
+  width: fit-content;
+}
+
+.modeButton {
+  min-height: 34px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.modeButton.active {
+  background: #fff;
+  color: var(--ink);
+  box-shadow: 0 4px 12px rgba(23, 50, 77, 0.08);
+}
+
 .controlActions {
   display: flex;
   flex-wrap: wrap;

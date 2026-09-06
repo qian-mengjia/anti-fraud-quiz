@@ -136,6 +136,9 @@ function getRoomPayload(playerId = '') {
   const player = getPlayer(playerId);
   const now = Date.now();
   return {
+    lanAccessUrl: `http://${getLanHost()}:${PORT}/`,
+    publicAccessUrl: publicBaseUrl ? `${publicBaseUrl}/` : null,
+    accessUrl: getBaseUrl() + '/',
     status: gameState.status,
     started: gameState.started,
     completed: gameState.completed,
@@ -196,6 +199,8 @@ const server = http.createServer(async (req, res) => {
       assignedQuestionCount: QUESTION_COUNT,
       questionTimeLimitMs: QUESTION_TIME_LIMIT_MS,
       countdownMs: COUNTDOWN_MS,
+      lanAccessUrl: `http://${getLanHost()}:${PORT}/`,
+      publicAccessUrl: publicBaseUrl ? `${publicBaseUrl}/` : null,
       accessUrl: `${getBaseUrl()}/`,
       adminUrl: `${getBaseUrl()}/admin`,
       monitorUrl: `${getBaseUrl()}/monitor`,

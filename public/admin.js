@@ -1,7 +1,9 @@
 const adminState = {
   pin: '',
   payload: null,
+  accessInfo: null,
   pollId: null,
+  accessMode: window.localStorage.getItem('anti-fraud-admin-access-mode') || 'public',
 };
 
 const $ = (selector) => document.querySelector(selector);
@@ -12,10 +14,13 @@ const elements = {
   start: $('#startButton'),
   end: $('#endButton'),
   reset: $('#resetButton'),
+  publicMode: $('#publicModeButton'),
+  lanMode: $('#lanModeButton'),
   status: $('#roomStatus'),
   hint: $('#controlHint'),
   qr: $('#adminQr'),
   url: $('#adminUrl'),
+  modeHint: $('#modeHint'),
   statStatus: $('#statStatus'),
   statPlayers: $('#statPlayers'),
   statActive: $('#statActive'),
@@ -49,6 +54,7 @@ async function requestJson(url, options) {
 
 function render(payload) {
   adminState.payload = payload;
+  adminState.accessInfo = payload;
   const monitor = payload.monitor || {};
   const status = payload.status || 'waiting';
   elements.status.textContent = statusLabels[status] || status;
@@ -61,6 +67,10 @@ function render(payload) {
   elements.start.disabled = status !== 'waiting' || !payload.players?.length;
   elements.end.disabled = status === 'ended' || status === 'waiting';
   elements.reset.disabled = status === 'countdown' || status === 'running';
+  const accessInfo = adminState.accessInfo || payload;
+  elements.publicMode.disabled = !accessInfo.publicAccessUrl;
+  elements.publicMode.classList.toggle('active', adminState.accessMode === 'public' && !!accessInfo.publicAccessUrl);
+  elements.lanMode.classList.toggle('active', adminState.accessMode === 'lan');
 
   if (!payload.players?.length) {
     elements.roster.innerHTML = '<p class="emptyState">还没有同学加入，先把二维码投出来吧。</p>';
@@ -77,6 +87,25 @@ function render(payload) {
   `).join('');
 }
 
+function pickAccessUrl(payload) {
+  const accessInfo = adminState.accessInfo || payload;
+  if (adminState.accessMode === 'public' && accessInfo.publicAccessUrl) {
+    return accessInfo.publicAccessUrl;
+  }
+  return accessInfo.lanAccessUrl || accessInfo.accessUrl;
+}
+
+async function refreshQr() {
+  if (!adminState.payload) return;
+  const accessUrl = pickAccessUrl(adminState.payload);
+  elements.url.textContent = accessUrl;
+  elements.modeHint.textContent = adminState.accessMode === 'public' && adminState.payload.publicAccessUrl
+    ? '当前展示模式：公网'
+    : '当前展示模式：局域网';
+  const qr = await requestJson(`/api/qr?text=${encodeURIComponent(accessUrl)}`);
+  elements.qr.src = qr.dataUrl;
+}
+
 async function refresh() {
   if (!adminState.pin) return;
   try {
@@ -84,6 +113,7 @@ async function refresh() {
       headers: { 'x-admin-pin': adminState.pin },
     });
     render(payload);
+    await refreshQr();
   } catch (error) {
     elements.hint.textContent = error.message;
     window.clearInterval(adminState.pollId);
@@ -99,6 +129,7 @@ async function control(path, confirmText) {
       body: JSON.stringify({ pin: adminState.pin }),
     });
     render(payload);
+    await refreshQr();
   } catch (error) {
     elements.hint.textContent = error.message;
   }
@@ -113,7 +144,7 @@ async function enterAdmin(event) {
     elements.controls.classList.remove('hidden');
     elements.hint.textContent = '同学扫码后会出现在下面的参赛名单中。';
     render(payload);
-    await setupQr();
+    await refreshQr();
     window.clearInterval(adminState.pollId);
     adminState.pollId = window.setInterval(refresh, 1000);
   } catch (error) {
@@ -121,14 +152,17 @@ async function enterAdmin(event) {
   }
 }
 
-async function setupQr() {
-  const meta = await requestJson('/api/meta');
-  elements.url.textContent = meta.accessUrl;
-  const qr = await requestJson(`/api/qr?text=${encodeURIComponent(meta.accessUrl)}`);
-  elements.qr.src = qr.dataUrl;
-}
-
 elements.login.addEventListener('submit', enterAdmin);
 elements.start.addEventListener('click', () => control('/api/admin/start'));
 elements.end.addEventListener('click', () => control('/api/admin/end', '确定结束当前答题吗？'));
 elements.reset.addEventListener('click', () => control('/api/admin/reset', '确定重置本局并清空参赛名单吗？'));
+elements.publicMode.addEventListener('click', async () => {
+  adminState.accessMode = 'public';
+  window.localStorage.setItem('anti-fraud-admin-access-mode', 'public');
+  if (adminState.payload) await refreshQr();
+});
+elements.lanMode.addEventListener('click', async () => {
+  adminState.accessMode = 'lan';
+  window.localStorage.setItem('anti-fraud-admin-access-mode', 'lan');
+  if (adminState.payload) await refreshQr();
+});
