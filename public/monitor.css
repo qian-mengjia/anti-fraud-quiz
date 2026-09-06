@@ -1,0 +1,197 @@
+.monitorShell {
+  max-width: 1540px;
+}
+
+.monitorStatus {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 13px;
+}
+
+.monitorMetrics {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.metricTile {
+  padding: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.26);
+  border-radius: var(--radius);
+  background: rgba(255, 250, 245, 0.92);
+  box-shadow: var(--shadow);
+}
+
+.metricTile span,
+.metricTile small {
+  color: var(--muted);
+}
+
+.metricTile span {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.metricTile strong {
+  margin-top: 4px;
+  font-size: 34px;
+}
+
+.metricTile small {
+  margin-left: 4px;
+}
+
+.monitorContent {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(300px, 0.7fr);
+  gap: 14px;
+}
+
+.bigLeaderboard,
+.activityPanel {
+  padding: 18px;
+}
+
+.monitorTableHead,
+.monitorRow {
+  display: grid;
+  grid-template-columns: 70px minmax(0, 1fr) minmax(180px, 0.8fr) 70px;
+  gap: 14px;
+  align-items: center;
+}
+
+.monitorTableHead {
+  padding: 0 14px 8px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.monitorLeaderboard,
+.activityList {
+  display: grid;
+  gap: 8px;
+}
+
+.monitorRow {
+  min-height: 58px;
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid var(--line);
+}
+
+.monitorRow strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.monitorRank {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(23, 50, 77, 0.08);
+  font-weight: 900;
+}
+
+.monitorRank.rank-1 {
+  background: #ffd86a;
+}
+
+.monitorRank.rank-2 {
+  background: #dbe6f0;
+}
+
+.monitorRank.rank-3 {
+  background: #edc39b;
+}
+
+.progressCell {
+  position: relative;
+  display: block;
+  height: 22px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(23, 50, 77, 0.08);
+}
+
+.progressCell i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--accent-2), var(--accent));
+}
+
+.progressCell small {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--ink);
+  font-weight: 800;
+}
+
+.monitorRow b {
+  color: var(--accent-2);
+  font-size: 22px;
+  text-align: right;
+}
+
+.activityRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 4px 10px;
+  padding: 12px;
+  border-radius: var(--radius);
+  background: rgba(23, 50, 77, 0.04);
+}
+
+.activityRow span {
+  grid-column: 1;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.activityRow b {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: center;
+  color: var(--accent-2);
+}
+
+@media (max-width: 900px) {
+  .monitorMetrics {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .monitorContent {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 620px) {
+  .monitorMetrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .monitorTableHead,
+  .monitorRow {
+    grid-template-columns: 44px minmax(0, 1fr) 60px;
+  }
+
+  .monitorTableHead span:nth-child(3),
+  .monitorRow .progressCell {
+    display: none;
+  }
+
+  .monitorRow b {
+    grid-column: 3;
+  }
+}

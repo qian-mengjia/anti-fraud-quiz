@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>智识反诈 · 实时监控</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/monitor.css">
+    <script defer src="/monitor.js"></script>
+  </head>
+  <body>
+    <div class="shell monitorShell">
+      <header class="brandbar">
+        <div class="brand">
+          <img class="logo" src="/logo.jpg" alt="计算机学院 logo">
+          <div class="brandCopy">
+            <p class="kicker">计算机学院 · 团日活动</p>
+            <h1>智识反诈 · 实时监控</h1>
+            <p class="subcopy">答题进度与排行榜实时更新</p>
+          </div>
+        </div>
+        <div class="monitorStatus">
+          <span class="statusPill" id="monitorStatus">连接中</span>
+          <span id="lastUpdated">—</span>
+        </div>
+      </header>
+
+      <main>
+        <section class="monitorMetrics">
+          <div class="metricTile"><span>已加入</span><strong id="totalPlayers">0</strong><small>人</small></div>
+          <div class="metricTile"><span>进行中</span><strong id="activePlayers">0</strong><small>人</small></div>
+          <div class="metricTile"><span>已完成</span><strong id="completedPlayers">0</strong><small>人</small></div>
+          <div class="metricTile"><span>最高分</span><strong id="maxScore">0</strong><small>分</small></div>
+          <div class="metricTile"><span>平均分</span><strong id="averageScore">0</strong><small>分</small></div>
+        </section>
+
+        <section class="monitorContent">
+          <section class="panel bigLeaderboard">
+            <div class="panelHead">
+              <div>
+                <p class="panelTag panelTagInk">实时排名</p>
+                <h2>反诈雷达榜</h2>
+              </div>
+              <span class="liveDot">● LIVE</span>
+            </div>
+            <div class="monitorTableHead"><span>名次</span><span>昵称</span><span>进度</span><span>得分</span></div>
+            <div id="leaderboard" class="monitorLeaderboard"></div>
+          </section>
+
+          <aside class="panel activityPanel">
+            <div class="panelHead">
+              <div>
+                <p class="panelTag panelTagInk">答题动态</p>
+                <h2>最近提交</h2>
+              </div>
+            </div>
+            <div id="activity" class="activityList"></div>
+          </aside>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

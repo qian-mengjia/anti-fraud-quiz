@@ -1,0 +1,194 @@
+.adminGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(260px, 0.75fr);
+  gap: 14px;
+}
+
+.adminControlPanel,
+.qrPanel,
+.rosterPanel {
+  padding: 18px;
+}
+
+.rosterPanel {
+  grid-column: 1 / -1;
+}
+
+.panelTagInk {
+  color: var(--accent-2);
+}
+
+.linkBadge {
+  color: #fff;
+  text-decoration: none;
+}
+
+.statusPill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: rgba(23, 50, 77, 0.08);
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.statusPill[data-status="running"] {
+  background: rgba(47, 191, 113, 0.18);
+  color: #14804a;
+}
+
+.statusPill[data-status="countdown"] {
+  background: rgba(241, 197, 76, 0.24);
+  color: #8f6700;
+}
+
+.statusPill[data-status="ended"] {
+  background: rgba(242, 93, 93, 0.14);
+  color: #a33a3a;
+}
+
+.adminLogin,
+.adminControls {
+  display: grid;
+  gap: 12px;
+}
+
+.controlActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.controlActions button {
+  flex: 1 1 140px;
+}
+
+.dangerButton {
+  min-height: 40px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: var(--radius);
+  background: rgba(242, 93, 93, 0.14);
+  color: #a33a3a;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.controlHint,
+.emptyState {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.adminStats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.adminStats div {
+  padding: 12px;
+  border-radius: var(--radius);
+  background: rgba(61, 180, 255, 0.08);
+}
+
+.adminStats span,
+.adminStats strong {
+  display: block;
+}
+
+.adminStats span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.adminStats strong {
+  margin-top: 6px;
+  font-size: 22px;
+}
+
+.qrPanel {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+}
+
+.qrPanel .panelHead {
+  width: 100%;
+}
+
+.adminQr {
+  width: 240px;
+  height: 240px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #fff;
+}
+
+.adminUrl {
+  width: 100%;
+  margin-top: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--muted);
+}
+
+.liveDot {
+  color: var(--good);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.roster {
+  display: grid;
+  gap: 8px;
+}
+
+.rosterRow {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) 80px 90px;
+  gap: 10px;
+  align-items: center;
+  padding: 12px;
+  border-radius: var(--radius);
+  background: rgba(23, 50, 77, 0.04);
+}
+
+.rosterRank {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(61, 180, 255, 0.16);
+  font-weight: 800;
+}
+
+@media (max-width: 760px) {
+  .adminGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .adminStats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .rosterRow {
+    grid-template-columns: 34px minmax(0, 1fr) 60px;
+  }
+
+  .rosterRow span:last-child {
+    grid-column: 2 / -1;
+  }
+}

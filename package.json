@@ -1,0 +1,13 @@
+{
+  "name": "anti-fraud-quiz",
+  "version": "1.0.0",
+  "private": true,
+  "description": "智识反诈团日活动 H5",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test lib/game-state.test.js lib/game-state-monitor.test.js"
+  },
+  "dependencies": {
+    "qrcode": "^1.5.4"
+  }
+}

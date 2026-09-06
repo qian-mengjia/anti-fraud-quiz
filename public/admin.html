@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>智识反诈 · 管理员控制台</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/admin.css">
+    <script defer src="/admin.js"></script>
+  </head>
+  <body>
+    <div class="shell adminShell">
+      <header class="brandbar">
+        <div class="brand">
+          <img class="logo" src="/logo.jpg" alt="计算机学院 logo">
+          <div class="brandCopy">
+            <p class="kicker">计算机学院 · 团日活动</p>
+            <h1>智识反诈 · 管理员控制台</h1>
+            <p class="subcopy">扫码入场，等人齐后统一开局</p>
+          </div>
+        </div>
+        <a class="badge linkBadge" href="/monitor">打开实时监控</a>
+      </header>
+
+      <main class="adminGrid">
+        <section class="panel adminControlPanel">
+          <div class="panelHead">
+            <div>
+              <p class="panelTag panelTagInk">控制台</p>
+              <h2>活动控制</h2>
+            </div>
+            <span class="statusPill" id="roomStatus">等待口令</span>
+          </div>
+
+          <form class="adminLogin" id="adminLogin">
+            <label class="field">
+              <span>管理员口令</span>
+              <input id="pinInput" inputmode="numeric" autocomplete="off" placeholder="请输入活动口令">
+            </label>
+            <button class="primaryButton" type="submit">进入控制台</button>
+          </form>
+
+          <div class="adminControls hidden" id="adminControls">
+            <div class="controlActions">
+              <button class="primaryButton" id="startButton" type="button">开始游戏</button>
+              <button class="ghostButton" id="endButton" type="button">结束本局</button>
+              <button class="dangerButton" id="resetButton" type="button">重置本局</button>
+            </div>
+            <p class="controlHint" id="controlHint">同学扫码加入后，确认人员到齐再点击开始。</p>
+          </div>
+
+          <div class="adminStats" id="adminStats">
+            <div><span>房间状态</span><strong id="statStatus">—</strong></div>
+            <div><span>已加入</span><strong id="statPlayers">0</strong></div>
+            <div><span>进行中</span><strong id="statActive">0</strong></div>
+            <div><span>最高分</span><strong id="statMax">0</strong></div>
+          </div>
+        </section>
+
+        <section class="panel qrPanel">
+          <div class="panelHead">
+            <div>
+              <p class="panelTag panelTagInk">扫码参与</p>
+              <h2>把二维码投到大屏</h2>
+            </div>
+          </div>
+          <img class="adminQr" id="adminQr" alt="学生参与二维码">
+          <code class="adminUrl" id="adminUrl">正在生成链接…</code>
+          <p class="controlHint">学生扫码后输入昵称，进入等待区。</p>
+        </section>
+
+        <section class="panel rosterPanel">
+          <div class="panelHead">
+            <div>
+              <p class="panelTag panelTagInk">参赛名单</p>
+              <h2><span id="rosterCount">0</span> 位同学已加入</h2>
+            </div>
+            <span class="liveDot">● 实时更新</span>
+          </div>
+          <div class="roster" id="roster"></div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
