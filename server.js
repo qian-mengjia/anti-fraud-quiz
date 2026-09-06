@@ -4,7 +4,6 @@ const path = require('node:path');
 const os = require('node:os');
 const { URL } = require('node:url');
 const QRCode = require('qrcode');
-const localtunnel = require('localtunnel');
 
 const QUESTIONS = require('./data/questions');
 const {
@@ -24,9 +23,8 @@ const PORT = Number(process.env.PORT || 3000);
 const COUNTDOWN_MS = 3000;
 const QUESTION_COUNT = 15;
 const ADMIN_PIN = process.env.ADMIN_PIN || '2026';
-const USE_PUBLIC_TUNNEL = process.env.PUBLIC_TUNNEL === '1';
+const PUBLIC_BASE_URL = process.env.PUBLIC_BASE_URL || '';
 const PUBLIC_DIR = path.join(__dirname, 'public');
-let publicBaseUrl = null;
 
 let gameState = createGameState(QUESTIONS, Date.now());
 
@@ -46,7 +44,7 @@ function getLanHost() {
 }
 
 function getBaseUrl() {
-  return publicBaseUrl || `http://${getLanHost()}:${PORT}`;
+  return PUBLIC_BASE_URL || `http://${getLanHost()}:${PORT}`;
 }
 
 const MIME_TYPES = {
@@ -137,8 +135,8 @@ function getRoomPayload(playerId = '') {
   const now = Date.now();
   return {
     lanAccessUrl: `http://${getLanHost()}:${PORT}/`,
-    publicAccessUrl: publicBaseUrl ? `${publicBaseUrl}/` : null,
-    accessUrl: getBaseUrl() + '/',
+      publicAccessUrl: PUBLIC_BASE_URL ? `${PUBLIC_BASE_URL.replace(/\/$/, '')}/` : null,
+      accessUrl: getBaseUrl() + '/',
     status: gameState.status,
     started: gameState.started,
     completed: gameState.completed,
@@ -462,17 +460,3 @@ const server = http.createServer(async (req, res) => {
 server.listen(PORT, () => {
   console.log(`Anti-fraud quiz running at http://localhost:${PORT}`);
 });
-
-if (USE_PUBLIC_TUNNEL) {
-  localtunnel({ port: PORT })
-    .then((tunnel) => {
-      publicBaseUrl = tunnel.url;
-      console.log(`Public tunnel available at ${publicBaseUrl}`);
-      tunnel.on('close', () => {
-        publicBaseUrl = null;
-      });
-    })
-    .catch((error) => {
-      console.error('Public tunnel failed:', error.message);
-    });
-}

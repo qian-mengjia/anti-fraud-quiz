@@ -13,7 +13,13 @@ npm install
 npm start
 ```
 
-默认访问地址是 `http://localhost:3000`。现场同学应使用管理员页面展示的局域网二维码进入。
+默认访问地址是 `http://localhost:3000`。正式对外使用时，请设置 `PUBLIC_BASE_URL` 为你的公网域名，例如：
+
+```powershell
+$env:PUBLIC_BASE_URL='https://your-domain.example'
+$env:PORT='3000'
+npm start
+```
 
 ## 管理员
 
