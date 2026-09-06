@@ -222,6 +222,10 @@ body::before {
   line-height: 1.6;
 }
 
+.waitingStage .ghostButton {
+  margin-top: 8px;
+}
+
 .panelHead {
   display: flex;
   align-items: flex-start;

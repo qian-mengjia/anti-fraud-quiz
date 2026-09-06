@@ -24,6 +24,7 @@ const elements = {
   waitingName: $('#waitingName'),
   waitingStatus: $('#waitingStatus'),
   waitingCountdown: $('#waitingCountdown'),
+  waitingLeaveButton: $('#waitingLeaveButton'),
   joinedBar: $('#joinedBar'),
   joinedName: $('#joinedName'),
   joinedScore: $('#joinedScore'),
@@ -375,6 +376,7 @@ async function finishGame() {
 
 elements.joinForm.addEventListener('submit', joinGame);
 elements.resetLocalButton.addEventListener('click', leaveCurrentPlayer);
+elements.waitingLeaveButton.addEventListener('click', leaveCurrentPlayer);
 elements.nameInput.value = window.localStorage.getItem('anti-fraud-player-name') || '';
 setupShareCode();
 renderLeaderboard();
